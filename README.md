@@ -2,4 +2,4 @@
 
 in env put your token
 
-the commands are in src/comunity
+the commands are in src/community
