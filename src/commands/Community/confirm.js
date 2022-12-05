@@ -9,7 +9,10 @@ module.exports = {
             option.setName('input')
                 .setDescription('The input to echo back')
                 .setRequired(true))
-
+        .addStringOption(option =>
+            option.setName('id')
+                .setDescription('channel id')
+                .setRequired(true))
     ,
 
     async execute(interaction, client) {
@@ -20,12 +23,8 @@ module.exports = {
         const { roles } = interaction.member;
         
         const role = await interaction.guild.roles.fetch('1049055791220523138').catch(console.error);
-        const schannel = client.channels.cache.get('1048313815575580772');
-        const testRole = await interaction.guild
-
-
-        const pchannel = client.channels.cache.get('1048547660837163078');
-
+        const schannel = client.channels.cache.get(interaction.options.getString('id'));
+       
 
 
         if (roles.cache.has('1049055791220523138')) {
