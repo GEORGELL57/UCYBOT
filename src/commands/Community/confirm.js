@@ -4,7 +4,7 @@ module.exports = {
 
     data: new SlashCommandBuilder()
         .setName('confirm')
-        .setDescription('confirm massage')
+        .setDescription('confirm message')
         .addStringOption(option =>
             option.setName('input')
                 .setDescription('The input to echo back')
