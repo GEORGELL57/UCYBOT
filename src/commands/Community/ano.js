@@ -4,24 +4,50 @@ module.exports ={
     
     data: new SlashCommandBuilder()
     .setName('ano')
-    .setDescription('Anomologita (sent secret massage)')
+    .setDescription('anonymus')
     .addStringOption(option =>
-		option.setName('input')
-			.setDescription('The input to echo back')
+        option.setName('input')
+            .setDescription('The input to echo back')
             .setRequired(true)),
     
     async execute(interaction,client){
         const schannel = client.channels.cache.get('1048313815575580772');
         
-            const pchannel = client.channels.cache.get('1048547660837163078');
-            
-            
-            pchannel.send({ content: 'A user wants to send this massage:'});
-            pchannel.send({ content: '```text\n'+interaction.options.getString('input')+'\n```'});
-            pchannel.send({ content: 'If you want to send it type /confirm copy the text here'});
-            
-        
-	       
+        const row = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId('primary')
+                            .setLabel('Send')
+                            .setStyle('Primary'),
+                            
+                        new ButtonBuilder()
+                            .setCustomId('second')
+                            .setLabel('Dont Send')
+                            .setStyle('Secondary'),
+                    );
+                    
+            const filter = i => i.customId === 'primary' || i.customId === 'second';
+            const pchannel = client.channels.cache.get('1049364218505330790');
+            const MSG = await pchannel.send({ content: interaction.options.getString('input'),  components: [row] });
+            const collector = MSG.createMessageComponentCollector({filter,max:1 });
+ 
+            collector.on('collect',async  i =>{
+                const ch=i.client.channels.cache.get('712782672400875580');
+                if (i.customId === 'primary') {
+                ch.send({content: interaction.options.getString('input')});
+                
+                await i.update({content: 'Sent',components: [] });
+               
+                }
+                else if(i.customId === 'second'){
+                    await i.update({content: 'Not Sent',components: [] });
+                    
+                }
+               
+                
+            })
+      collector.on('end', collected => console.log(`Collected ${collected.size} items`));
+           
         
         await interaction.reply({content: 'Going for a check'});
         
