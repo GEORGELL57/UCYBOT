@@ -1,6 +1,6 @@
 # UCYBOT
 
-##This bot is for my uny if you want to see the code is open sorce
+## This bot is for my uny if you want to see the code is open sorce
 
 in env put your token
 
